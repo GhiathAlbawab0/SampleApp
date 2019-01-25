@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "b0c16f9d-ee61-4f31-9dec-0961f1652f35",
+		"name": "Fawasell",
+		"description": "List of APIs for video app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test Call",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://stg.api.fawasell.com/v1/test?app_id=14378174&app_secret=cFJiGxZVTGf3rPNMK1o08WQWWpnr8M9RmZOyGxcM",
+					"protocol": "http",
+					"host": [
+						"stg",
+						"api",
+						"fawasell",
+						"com"
+					],
+					"path": [
+						"v1",
+						"test"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "14378174"
+						},
+						{
+							"key": "app_secret",
+							"value": "cFJiGxZVTGf3rPNMK1o08WQWWpnr8M9RmZOyGxcM"
+						}
+					]
+				},
+				"description": "This is just a test call to see if your app id and secret are working well, \nand to check if the server is up ;)"
+			},
+			"response": []
+		},
+		{
+			"name": "List Categories",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9cb3638e-a8c7-4f1c-8c55-0550394bf312",
+						"exec": [
+							"",
+							"",
+							"function getUrlParams(url) {",
+							"  var queryString = url.split(\"?\")[1];",
+							"  var keyValuePairs = queryString.split(\"&\");",
+							"  var keyValue, params = \"\";",
+							"  keyValuePairs.forEach(function(pair) {",
+							"        keyValue = pair.split(\"=\");",
+							"        if (keyValue[0] !== \"signature\") {",
+							"            params = params + decodeURIComponent(keyValue[1]).replace(\"+\", \" \");    ",
+							"            //console.log(keyValue[0]);",
+							"        }",
+							"    });",
+							"    params = params + \"diBIGrtVCAH00GtMVLupirbNdFEjooqk8YPJUtUw\";",
+							"    return params;",
+							"}",
+							"",
+							"var signature = getUrlParams(request.url);",
+							"",
+							"postman.setEnvironmentVariable(\"signature\", CryptoJS.MD5(signature));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://stg.api.fawasell.com/v1/categories?app_id=14378174&app_secret=cFJiGxZVTGf3rPNMK1o08WQWWpnr8M9RmZOyGxcM&signature={{signature}}",
+					"protocol": "http",
+					"host": [
+						"stg",
+						"api",
+						"fawasell",
+						"com"
+					],
+					"path": [
+						"v1",
+						"categories"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "14378174"
+						},
+						{
+							"key": "app_secret",
+							"value": "cFJiGxZVTGf3rPNMK1o08WQWWpnr8M9RmZOyGxcM"
+						},
+						{
+							"key": "signature",
+							"value": "{{signature}}"
+						}
+					]
+				},
+				"description": "Get all categories"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Posts",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1d6bf2a3-ab1a-414b-a279-e77f6f3c9ab8",
+						"exec": [
+							"",
+							"function getUrlParams(url) {",
+							"  var queryString = url.split(\"?\")[1];",
+							"  var keyValuePairs = queryString.split(\"&\");",
+							"  var keyValue, params = \"\";",
+							"  keyValuePairs.forEach(function(pair) {",
+							"        keyValue = pair.split(\"=\");",
+							"        if (keyValue[0] !== \"signature\") {",
+							"            params = params + decodeURIComponent(keyValue[1]).replace(\"+\", \" \");    ",
+							"            //console.log(keyValue[0]);",
+							"        }",
+							"    });",
+							"    params = params + \"diBIGrtVCAH00GtMVLupirbNdFEjooqk8YPJUtUw\";",
+							"    return params;",
+							"}",
+							"",
+							"var signature = \"\";",
+							"",
+							"if (request.method === \"GET\") {",
+							"    signature = getUrlParams(request.url);",
+							"}",
+							"",
+							"postman.setEnvironmentVariable(\"signature\", CryptoJS.MD5(signature));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://stg.api.fawasell.com/v1/posts?category=2&page=1&limit=10&app_id=14378174&app_secret=cFJiGxZVTGf3rPNMK1o08WQWWpnr8M9RmZOyGxcM&signature={{signature}}&q=دوري",
+					"protocol": "http",
+					"host": [
+						"stg",
+						"api",
+						"fawasell",
+						"com"
+					],
+					"path": [
+						"v1",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "2",
+							"description": "id_category"
+						},
+						{
+							"key": "sort",
+							"value": "recent",
+							"description": "{\"rank\",\"recent\",\"top_viewed\"}",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "app_id",
+							"value": "14378174"
+						},
+						{
+							"key": "app_secret",
+							"value": "cFJiGxZVTGf3rPNMK1o08WQWWpnr8M9RmZOyGxcM"
+						},
+						{
+							"key": "signature",
+							"value": "{{signature}}"
+						},
+						{
+							"key": "q",
+							"value": "دوري"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9ecb2fb5-a3e2-4df5-b38b-56a1f348c2f3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "adbadb34-3a01-4505-85e7-345b005c2ddd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

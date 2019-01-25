@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SampleApp</string>
+    <string name="categories_title">Categories</string>
+    <string name="unknown_error">Unknown Error.</string>
+    <string name="no_internet_connection">no internet connection, click to refresh.</string>
+    <string name="loading_categories">Loading Categories...</string>
+</resources>
