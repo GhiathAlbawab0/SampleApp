@@ -109,23 +109,25 @@ public class DataRepository {
     {
         Calendar calendar=Calendar.getInstance();
         calendar.add(Calendar.SECOND,-FRESH_TIMEOUT);
-        boolean postsExist=mDatabase.postDao().hasPosts(calendar.getTimeInMillis());
-        if(!postsExist)
+
+
             executor.networkIO().execute(() ->
             {
-                List<PostEntity> postEntities=new WebserviceCall(messageViewer).getPostsOnline(category,page,limit,q);
-                if(postEntities!=null && !postEntities.isEmpty())
-                {
+                boolean postsExist=mDatabase.postDao().hasPosts(calendar.getTimeInMillis());
+                if(!postsExist) {
+                    List<PostEntity> postEntities = new WebserviceCall(messageViewer).getPostsOnline(category, page, limit, q);
+
+                    if (postEntities != null && !postEntities.isEmpty()) {
 //                        mDatabase.categoryDao().deleteAllCategories();
-                    //set update date
-                    Calendar calendar1=Calendar.getInstance();
-                    for (PostEntity cat:postEntities) {
-                        cat.setLastUpdate(calendar1.getTimeInMillis());
+                        //set update date
+                        Calendar calendar1 = Calendar.getInstance();
+                        for (PostEntity cat : postEntities) {
+                            cat.setLastUpdate(calendar1.getTimeInMillis());
+                        }
+                        mDatabase.postDao().deleteAllPosts();
+                        mDatabase.postDao().insertOrReplaceAllPosts(postEntities);
                     }
-                    mDatabase.postDao().deleteAllPosts();
-                    mDatabase.postDao().insertOrReplaceAllPosts(postEntities);
-                }
-            });
+                }});
 
     }
 
