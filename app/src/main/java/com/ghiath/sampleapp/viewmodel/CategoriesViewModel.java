@@ -18,31 +18,29 @@ import androidx.lifecycle.ViewModelProvider;
 public class CategoriesViewModel extends ViewModel {
     private DataRepository mDataRepository;
     private MessageViewer mMessageViewer;
-    private LiveData<List<CategoryEntity>> categories;
-//    private MediatorLiveData<List<CategoryEntity>> mObservableCategories=null;
+
+    private MediatorLiveData<List<CategoryEntity>> mObservableCategories;
 
     public CategoriesViewModel(Application application,MessageViewer messageViewer) {
-        if (this.categories != null) {
+        if (this.mObservableCategories != null) {
             return;
         }
         this.mMessageViewer = messageViewer;
 
-//        categories = new MediatorLiveData<>();
-//        mObservableCategories.setValue(null);
-        mDataRepository = ((BasicApplication) application).getRepository();
-//         categories = new MediatorLiveData<>();
-//        mObservableCategories.addSource(categories, mObservableCategories::setValue);
-        ((BasicApplication) application).mAppExecutors.diskIO().execute(() ->
-        {
-           categories= mDataRepository.getCategories(messageViewer);
 
-            });
+        mObservableCategories=new MediatorLiveData<>();
+        mObservableCategories.setValue(null);
+        mDataRepository = ((BasicApplication) application).getRepository();
+
+
+        LiveData<List<CategoryEntity>>    categories= mDataRepository.getCategories(messageViewer);
+        mObservableCategories.addSource(categories, mObservableCategories::setValue);
 
     }
 
 
     public LiveData<List<CategoryEntity>> getmObservableCategories() {
-        return categories;
+        return mObservableCategories;
     }
     public void refereshCategories(){mDataRepository.refreshCategories(mMessageViewer);}
 

@@ -1,6 +1,7 @@
 package com.ghiath.sampleapp.ui;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import com.ghiath.sampleapp.databinding.CategoriesFragmentBinding;
 import com.ghiath.sampleapp.db.entity.CategoryEntity;
 import com.ghiath.sampleapp.viewmodel.CategoriesViewModel;
 
+import java.util.List;
+
 public class CategoriesFragment extends Fragment implements MessageViewer {
 
     private CategoriesViewModel mViewModel;
@@ -40,6 +43,7 @@ public class CategoriesFragment extends Fragment implements MessageViewer {
         binding.loadingTv.setOnClickListener(
                 l->mViewModel.refereshCategories()
         );
+        binding.noConnection.setOnClickListener(l->mViewModel.refereshCategories());
         binding.categoriesRec.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.categoriesRec.setItemAnimator(new DefaultItemAnimator());
 
@@ -59,20 +63,34 @@ public class CategoriesFragment extends Fragment implements MessageViewer {
         mViewModel = ViewModelProviders.of(this,factory).get(CategoriesViewModel.class);
 
         if(mViewModel.getmObservableCategories()!=null)
-        mViewModel.getmObservableCategories().observe(this,categoryEntities -> {
-            if(categoryEntities!=null)
-            {
-                binding.setIsLoading(false);
-                categoryAdapter.setmCustomerList(categoryEntities);
-                categoryAdapter.notifyDataSetChanged();
-                if (!categoryEntities.isEmpty())
-                    hideNoConnection();
+        mViewModel.getmObservableCategories().observe(this, new Observer<List<CategoryEntity>>() {
+            @Override
+            public void onChanged(List<CategoryEntity> categoryEntities) {
+                if (categoryEntities != null) {
+                    binding.setIsLoading(false);
+                    categoryAdapter.setmCustomerList(categoryEntities);
+                    categoryAdapter.notifyDataSetChanged();
+                    if (!categoryEntities.isEmpty())
+                        hideNoConnection();
+
+                } else
+                    binding.setIsLoading(true);
+                binding.executePendingBindings();
 
             }
-            else
-                binding.setIsLoading(true);
-            binding.executePendingBindings();
         });
+//        categoryEntities -> {
+//            if (categoryEntities != null) {
+//                binding.setIsLoading(false);
+//                categoryAdapter.setmCustomerList(categoryEntities);
+//                categoryAdapter.notifyDataSetChanged();
+//                if (!categoryEntities.isEmpty())
+//                    hideNoConnection();
+//
+//            } else
+//                binding.setIsLoading(true);
+//            binding.executePendingBindings();
+//        });
     }
     private void hideNoConnection()
     {

@@ -11,7 +11,7 @@
             name="isLoading"
             type="boolean" />
     </data>
-<LinearLayout
+<RelativeLayout
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +23,7 @@
         layout="@layout/no_connection_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:visibleGone="@{isLoading}"
+
         >
     </include>
     <TextView
@@ -43,5 +43,5 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/category_item"
         app:visibleGone="@{!isLoading}"/>
-</LinearLayout>
+</RelativeLayout>
 </layout>

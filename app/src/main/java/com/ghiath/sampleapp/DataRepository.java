@@ -70,9 +70,9 @@ public class DataRepository {
 
     public LiveData<List<CategoryEntity>> getCategories(MessageViewer messageViewer) {
 
-         refreshCategories(messageViewer);
+        executor.diskIO().execute(()->{refreshCategories(messageViewer);});
 
-           return mDatabase.categoryDao().loadAllCategories();
+           return mObservableCategories;
     }
 
     public void refreshCategories(MessageViewer messageViewer)
