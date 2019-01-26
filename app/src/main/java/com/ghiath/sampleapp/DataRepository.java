@@ -122,6 +122,7 @@ public class DataRepository {
                     for (PostEntity cat:postEntities) {
                         cat.setLastUpdate(calendar1.getTimeInMillis());
                     }
+                    mDatabase.postDao().deleteAllPosts();
                     mDatabase.postDao().insertOrReplaceAllPosts(postEntities);
                 }
             });
