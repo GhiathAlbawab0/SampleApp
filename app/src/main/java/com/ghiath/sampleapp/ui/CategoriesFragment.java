@@ -4,6 +4,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,12 @@ public class CategoriesFragment extends Fragment implements MessageViewer {
         @Override
         public void onClick(CategoryEntity customerEntity) {
 
+            Intent intent=new Intent(getActivity(),PostsActivity.class);
+            intent.putExtra(PostsActivity.CATEGORY_KEY,String.valueOf(customerEntity.getId()));
+            intent.putExtra(PostsActivity.PAGE_KEY,"1");
+            intent.putExtra(PostsActivity.LIMIT_KEY,"10");
+            intent.putExtra(PostsActivity.Q_KEY,"");
+            getActivity().startActivity(intent);
         }
     };
     @Override

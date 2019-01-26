@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.CategoriesFragment"
+    >
+
+
+    <data>
+        <variable
+            name="isLoading"
+            type="boolean" />
+    </data>
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+        <include
+            android:id="@+id/no_connection"
+            layout="@layout/no_connection_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+        </include>
+        <TextView
+            android:id="@+id/loading_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center"
+            android:text="@string/loading_categories"
+            app:visibleGone="@{isLoading}"
+
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/posts_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/post_item"
+            app:visibleGone="@{!isLoading}"/>
+    </RelativeLayout>
+</layout>

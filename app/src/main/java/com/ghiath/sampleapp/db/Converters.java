@@ -13,8 +13,9 @@ import androidx.room.TypeConverter;
 public class Converters {
         @TypeConverter
         public static ArrayList<MediaEntity> fromString(String value) {
-            Type listType = new TypeToken<ArrayList<String>>() {}.getType();
-            return new Gson().fromJson(value, listType);
+            Type listType = new TypeToken<ArrayList<MediaEntity>>() {}.getType();
+            ArrayList<MediaEntity> mediaEntities= new Gson().fromJson(value, listType);
+            return mediaEntities;
         }
 
         @TypeConverter

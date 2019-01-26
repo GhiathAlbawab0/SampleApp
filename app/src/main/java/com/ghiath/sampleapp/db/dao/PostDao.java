@@ -24,7 +24,7 @@ public interface PostDao {
     @Query("SELECT * FROM posts")
     LiveData<List<PostEntity>> loadAllPosts();
 
-    @Query("SELECT * FROM posts where idPost=:postId")
+    @Query("SELECT * FROM posts where id_post=:postId")
     LiveData<List<PostEntity>> loadPostsForCustomerID(int postId);
 
     @Query("SELECT * FROM posts WHERE lower(name) LIKE :name OR lower(caption) LIKE :name")

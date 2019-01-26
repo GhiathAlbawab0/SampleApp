@@ -99,7 +99,7 @@ public class DataRepository {
     }
     public LiveData<List<PostEntity>> loadPosts(MessageViewer me,String category,String page,String limit,String q)
     {
-        refereshPosts(me,category,page,limit,q);
+        executor.diskIO().execute(()->{ refereshPosts(me,category,page,limit,q);});
         return mObserablePosts;
 
 

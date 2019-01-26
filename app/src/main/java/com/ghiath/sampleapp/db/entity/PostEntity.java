@@ -6,6 +6,7 @@ import com.ghiath.sampleapp.db.Converters;
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
@@ -13,9 +14,11 @@ import androidx.room.TypeConverters;
 
 
 @Entity(tableName = "posts"
-        ,indices = {@Index( value="idPost"),@Index(value = {"name","caption"})})
+        ,indices = {@Index( value="id_post"),@Index(value = {"name","caption"})})
 public class PostEntity {
-    @PrimaryKey int idPost;// autoGeneration has omitted because delete and refresh in continue so number not being between 1-70
+    @PrimaryKey
+    @ColumnInfo(name = "id_post")
+    int id_post;
 
          String username;
         private String name;
@@ -38,8 +41,8 @@ public class PostEntity {
    Long lastUpdate;
 
 
-    public PostEntity(int idPost, String username, String name, String caption, String type, float category_id, String url, ArrayList<MediaEntity> media, float view_count, float like_count, float dislike_count, float comment_count, String coutrycode2, float ranking_score, float created_at, Long lastUpdate) {
-        this.idPost = idPost;
+    public PostEntity(int id_post, String username, String name, String caption, String type, float category_id, String url, ArrayList<MediaEntity> media, float view_count, float like_count, float dislike_count, float comment_count, String coutrycode2, float ranking_score, float created_at, Long lastUpdate) {
+        this.id_post = id_post;
         this.username = username;
         this.name = name;
         this.caption = caption;
@@ -66,12 +69,12 @@ public class PostEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    public int getIdPost() {
-        return idPost;
+    public int getId_post() {
+        return id_post;
     }
 
-    public void setIdPost(int idPost) {
-        this.idPost = idPost;
+    public void setId_post(int id_post) {
+        this.id_post = id_post;
     }
 
     public String getUsername() {
