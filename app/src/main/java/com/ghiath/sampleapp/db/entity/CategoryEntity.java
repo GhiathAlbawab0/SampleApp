@@ -4,6 +4,7 @@ package com.ghiath.sampleapp.db.entity;
 
 import java.io.Serializable;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
@@ -20,6 +21,7 @@ public class CategoryEntity implements Serializable {
     String description;
     String image;
 
+    @Nullable
     Long lastUpdate;
 
     public CategoryEntity(int id, String name, String description, String image, Long lastUpdate) {

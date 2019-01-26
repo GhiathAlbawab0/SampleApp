@@ -28,7 +28,7 @@ public interface PostDao {
     LiveData<List<PostEntity>> loadPostsForCustomerID(int postId);
 
     @Query("SELECT * FROM posts WHERE lower(name) LIKE :name OR lower(caption) LIKE :name")
-    LiveData<List<CategoryEntity>> searchPostsByString(String name);
+    LiveData<List<PostEntity>> searchPostsByString(String name);
 
 
     @Query("DELETE FROM posts")

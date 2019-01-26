@@ -79,7 +79,7 @@ List<CategoryEntity> mCategoryList;
     @Override
     public void onBindViewHolder(CategoriesHolder holder, int position) {
         holder.customerItemBinding.setCategory(mCategoryList.get(position));
-        Glide.with(holder.customerItemBinding.image).load(mCategoryList.get(position).getImage());
+        Glide.with(holder.customerItemBinding.image.getContext()).load(mCategoryList.get(position).getImage()).into(holder.customerItemBinding.image);
         holder.customerItemBinding.executePendingBindings();
     }
 

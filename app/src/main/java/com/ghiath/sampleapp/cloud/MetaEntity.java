@@ -11,7 +11,7 @@ public class MetaEntity {
     Integer showing;
     Integer page;
     Integer pages;
-    Long total_processing_time;
+    float total_processing_time;
     Boolean cached;
 
 
@@ -47,7 +47,7 @@ public class MetaEntity {
         return pages;
     }
 
-    public Long getTotal_processing_time() {
+    public float getTotal_processing_time() {
         return total_processing_time;
     }
 

@@ -1,15 +1,19 @@
 package com.ghiath.sampleapp.db.entity;
 
 
+import com.ghiath.sampleapp.db.Converters;
+
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 
 @Entity(tableName = "posts"
-        ,indices = {@Index( value="number"),@Index(value = {"name","caption"})})
+        ,indices = {@Index( value="idPost"),@Index(value = {"name","caption"})})
 public class PostEntity {
     @PrimaryKey int idPost;// autoGeneration has omitted because delete and refresh in continue so number not being between 1-70
 
@@ -18,9 +22,10 @@ public class PostEntity {
         private String caption;
         private String type;
         private float category_id;
-        ArrayList< Object > tag = new ArrayList < Object > ();
+//        ArrayList< Object > tag = new ArrayList < Object > ();
         private String url;
-        ArrayList < MediaEntity > media = new ArrayList < MediaEntity > ();
+    @TypeConverters({Converters.class})
+        ArrayList < MediaEntity > media = new ArrayList <  > ();
         private float view_count;
         private float like_count;
         private float dislike_count;
@@ -29,17 +34,18 @@ public class PostEntity {
         private float ranking_score;
         private float created_at;
 
-    Long lastUpdate;
+   @Nullable
+   Long lastUpdate;
 
 
-    public PostEntity(int idPost, String username, String name, String caption, String type, float category_id, ArrayList<Object> tag, String url, ArrayList<MediaEntity> media, float view_count, float like_count, float dislike_count, float comment_count, String coutrycode2, float ranking_score, float created_at, Long lastUpdate) {
+    public PostEntity(int idPost, String username, String name, String caption, String type, float category_id, String url, ArrayList<MediaEntity> media, float view_count, float like_count, float dislike_count, float comment_count, String coutrycode2, float ranking_score, float created_at, Long lastUpdate) {
         this.idPost = idPost;
         this.username = username;
         this.name = name;
         this.caption = caption;
         this.type = type;
         this.category_id = category_id;
-        this.tag = tag;
+//        this.tag = tag;
         this.url = url;
         this.media = media;
         this.view_count = view_count;
@@ -108,13 +114,13 @@ public class PostEntity {
         this.category_id = category_id;
     }
 
-    public ArrayList<Object> getTag() {
-        return tag;
-    }
-
-    public void setTag(ArrayList<Object> tag) {
-        this.tag = tag;
-    }
+//    public ArrayList<Object> getTag() {
+//        return tag;
+//    }
+//
+//    public void setTag(ArrayList<Object> tag) {
+//        this.tag = tag;
+//    }
 
     public String getUrl() {
         return url;

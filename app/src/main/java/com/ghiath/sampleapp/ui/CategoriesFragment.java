@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +37,12 @@ public class CategoriesFragment extends Fragment implements MessageViewer {
         binding =DataBindingUtil.inflate(inflater,R.layout.categories_fragment, container, false);
         categoryAdapter=new CategoryAdapter(categoryClickCallback);
         binding.categoriesRec.setAdapter(categoryAdapter);
-        binding.loadingTv.setOnClickListener(l->mViewModel.getmObservableCategories());
+        binding.loadingTv.setOnClickListener(
+                l->mViewModel.refereshCategories()
+        );
+        binding.categoriesRec.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.categoriesRec.setItemAnimator(new DefaultItemAnimator());
+
         return binding.getRoot();
     }
 
@@ -50,12 +57,14 @@ public class CategoriesFragment extends Fragment implements MessageViewer {
         super.onActivityCreated(savedInstanceState);
         CategoriesViewModel.Factory factory = new CategoriesViewModel.Factory(getActivity().getApplication(),this);
         mViewModel = ViewModelProviders.of(this,factory).get(CategoriesViewModel.class);
+
+        if(mViewModel.getmObservableCategories()!=null)
         mViewModel.getmObservableCategories().observe(this,categoryEntities -> {
             if(categoryEntities!=null)
             {
                 binding.setIsLoading(false);
                 categoryAdapter.setmCustomerList(categoryEntities);
-//                categoryAdapter.notifyDataSetChanged();
+                categoryAdapter.notifyDataSetChanged();
                 if (!categoryEntities.isEmpty())
                     hideNoConnection();
 

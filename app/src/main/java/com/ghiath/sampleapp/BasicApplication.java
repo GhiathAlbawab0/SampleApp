@@ -13,7 +13,7 @@ import java.util.Calendar;
 
 
 public class BasicApplication extends Application {
-    private AppExecutors mAppExecutors;
+    public AppExecutors mAppExecutors;
 
     @Override
     public void onCreate() {
